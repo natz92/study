@@ -1,42 +1,80 @@
+import { ProductCard } from "@/components/product-card";
+import { StoreHeader } from "@/components/store-header";
+import { ButtonLink } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { featuredProducts, formatPrice, products } from "@/lib/products";
+
 export default function Home() {
+  const heroProduct = products[0];
+
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,#ffd98a_0,#fff8ed_34rem)] px-6 py-8 text-stone-950 sm:px-10">
-      <section className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-5xl flex-col justify-between gap-12">
-        <header className="flex items-center justify-between">
-          <p className="text-lg font-semibold tracking-wide">Orange</p>
-          <p className="rounded-full border border-stone-900/15 px-3 py-1 text-sm text-stone-700">
-            Static Cocktail Atlas
-          </p>
-        </header>
-
-        <div className="max-w-3xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-orange-700">
-            Next.js 16 + Tailwind CSS
-          </p>
-          <h1 className="text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">
-            칵테일과 재료를 따라 탐색하는 작은 도감.
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
-            레시피, 재료 관계, 비슷한 칵테일 추천을 정적 데이터로 빌드하는
-            토이 프로젝트의 첫 잔입니다.
-          </p>
-        </div>
-
-        <div className="grid gap-3 sm:grid-cols-3">
-          {[
-            "칵테일 JSON 정규화",
-            "재료별 역인덱스",
-            "유사 칵테일 추천",
-          ].map((item) => (
-            <div
-              className="rounded-lg border border-stone-900/10 bg-white/55 p-4 shadow-sm"
-              key={item}
-            >
-              <p className="text-sm font-medium text-stone-800">{item}</p>
+    <>
+      <StoreHeader />
+      <main>
+        <section className="border-b border-stone-200 bg-stone-50">
+          <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_28rem] lg:px-8">
+            <div>
+              <Badge variant="secondary">스터디 샘플 프로젝트</Badge>
+              <h1 className="mt-5 max-w-3xl text-4xl font-bold tracking-tight text-stone-950 sm:text-6xl">
+                App Router로 만드는 고양이 쇼핑몰
+              </h1>
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-stone-600">
+                사료, 간식, 장난감, 리빙 상품 목업 데이터로 메인, 상품 목록,
+                상품 상세, 로그인 화면을 탐색하는 최소 샘플입니다.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <ButtonLink href="/products" size="lg">
+                  상품 둘러보기
+                </ButtonLink>
+                <ButtonLink href="/login" size="lg" variant="outline">
+                  로그인 화면
+                </ButtonLink>
+              </div>
             </div>
-          ))}
-        </div>
-      </section>
-    </main>
+
+            <div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+              <div className={`aspect-square rounded-md ${heroProduct.color} p-5`}>
+                <div className="flex h-full flex-col justify-between rounded-md border border-white/60 bg-white/40 p-5">
+                  <Badge>{heroProduct.badge}</Badge>
+                  <div>
+                    <p className="text-sm font-medium text-stone-600">
+                      오늘의 추천
+                    </p>
+                    <h2 className="mt-2 text-2xl font-bold text-stone-950">
+                      {heroProduct.name}
+                    </h2>
+                    <p className="mt-2 text-stone-600">
+                      {heroProduct.shortDescription}
+                    </p>
+                    <p className="mt-5 text-xl font-bold">
+                      {formatPrice(heroProduct.price)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold text-orange-700">Featured</p>
+              <h2 className="mt-1 text-2xl font-bold tracking-tight">
+                고양이를 위한 대표 상품
+              </h2>
+            </div>
+            <ButtonLink href="/products" variant="ghost">
+              전체 보기
+            </ButtonLink>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredProducts.map((product) => (
+              <ProductCard key={product.slug} product={product} />
+            ))}
+          </div>
+        </section>
+      </main>
+    </>
   );
 }
