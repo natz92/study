@@ -2,10 +2,11 @@ import { ProductCard } from "@/components/product-card";
 import { StoreHeader } from "@/components/store-header";
 import { ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { featuredProducts, formatPrice, products } from "@/lib/products";
+import { formatPrice, getFeaturedProducts } from "@/lib/products";
 
-export default function Home() {
-  const heroProduct = products[0];
+export default async function Home() {
+  const featuredProducts = await getFeaturedProducts();
+  const heroProduct = featuredProducts[0];
 
   return (
     <>
@@ -32,27 +33,29 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
-              <div className={`aspect-square rounded-md ${heroProduct.color} p-5`}>
-                <div className="flex h-full flex-col justify-between rounded-md border border-white/60 bg-white/40 p-5">
-                  <Badge>{heroProduct.badge}</Badge>
-                  <div>
-                    <p className="text-sm font-medium text-stone-600">
-                      오늘의 추천
-                    </p>
-                    <h2 className="mt-2 text-2xl font-bold text-stone-950">
-                      {heroProduct.name}
-                    </h2>
-                    <p className="mt-2 text-stone-600">
-                      {heroProduct.shortDescription}
-                    </p>
-                    <p className="mt-5 text-xl font-bold">
-                      {formatPrice(heroProduct.price)}
-                    </p>
+            {heroProduct ? (
+              <div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+                <div className={`aspect-square rounded-md ${heroProduct.color} p-5`}>
+                  <div className="flex h-full flex-col justify-between rounded-md border border-white/60 bg-white/40 p-5">
+                    <Badge>{heroProduct.badge}</Badge>
+                    <div>
+                      <p className="text-sm font-medium text-stone-600">
+                        오늘의 추천
+                      </p>
+                      <h2 className="mt-2 text-2xl font-bold text-stone-950">
+                        {heroProduct.name}
+                      </h2>
+                      <p className="mt-2 text-stone-600">
+                        {heroProduct.shortDescription}
+                      </p>
+                      <p className="mt-5 text-xl font-bold">
+                        {formatPrice(heroProduct.price)}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </section>
 

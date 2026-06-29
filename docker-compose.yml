@@ -1,0 +1,10 @@
+services:
+  cat-market-api:
+    build:
+      context: ./api
+    container_name: orange-cat-market-api
+    environment:
+      PORT: 4000
+      CORS_ORIGIN: http://localhost:3000,http://localhost:3001
+    ports:
+      - "4000:4000"

@@ -2,9 +2,14 @@ import { ProductCard } from "@/components/product-card";
 import { StoreHeader } from "@/components/store-header";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
-import { categories, products } from "@/lib/products";
+import { getCategories, getProducts } from "@/lib/products";
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const [categories, products] = await Promise.all([
+    getCategories(),
+    getProducts(),
+  ]);
+
   return (
     <>
       <StoreHeader />

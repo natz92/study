@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Orange Cat Market
+
+Next.js App Router 스터디를 위한 고양이 쇼핑몰 샘플 프로젝트입니다.
+
+별도 목업 API 서버는 `api` 디렉터리에 있으며 Docker로 실행할 수 있습니다.
 
 ## Getting Started
 
-First, run the development server:
+프론트엔드 개발 서버를 실행합니다.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[http://localhost:3000](http://localhost:3000)에서 확인할 수 있습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Mock API
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Nest 기반 목업 API를 실행합니다.
 
-## Learn More
+```bash
+docker compose up --build cat-market-api
+```
 
-To learn more about Next.js, take a look at the following resources:
+API 서버는 [http://localhost:4000](http://localhost:4000)에서 실행됩니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+주요 엔드포인트:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `GET /health`
+- `GET /categories`
+- `GET /products`
+- `GET /products?category=간식`
+- `GET /products/:slug`
 
-## Deploy on Vercel
+프론트엔드는 서버 컴포넌트에서 `API_BASE_URL`을 사용해 API를 호출합니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+API_BASE_URL=http://localhost:4000 pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Frontend
+
+```bash
+pnpm lint
+pnpm build
+```
+
+## API Local Development
+
+```bash
+cd api
+npm install
+npm run start:dev
+```
+
+API만 타입 체크하려면 다음을 실행합니다.
+
+```bash
+cd api
+npm run typecheck
+```
